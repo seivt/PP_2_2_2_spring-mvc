@@ -15,9 +15,16 @@ public class CarController {
     }
 
     @GetMapping("/cars")
-    public String getCars(@RequestParam(value = "count", defaultValue = "5") int count,
+    public String getCars(@RequestParam(value = "count", defaultValue = "5") String count,
                           Model model) {
-        model.addAttribute("cars", carService.getCars(count));
-        return "cars";
+        if (!count.matches("[0-5]")) {
+            return "cars-exception";
+        } else {
+            System.out.println("asdvas");
+            model.addAttribute("cars", carService.getCars(Integer.parseInt(count)));
+            return "cars";
+        }
+
+
     }
 }
